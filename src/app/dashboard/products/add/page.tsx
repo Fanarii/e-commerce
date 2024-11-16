@@ -60,13 +60,14 @@ const Page = () => {
   const handleSelectChange = (value: string, field: string) => {
     setFormData((prevData) => ({
       ...prevData,
-      [field]: +value,
+      [field]: +value,  // Ensure the values are numeric for categoryId, brandId
     }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Validate form data
     if (!formData.name || !formData.price || !formData.stock || !formData.categoryId || !formData.brandId || !formData.status) {
         alert("Please fill in all fields")
         return
@@ -89,7 +90,19 @@ const Page = () => {
         console.error("Error creating product:", error)
         alert("Failed to create product")
     }
-}
+  }
+
+  const handleReset = () => {
+    setFormData({
+      name: "",
+      price: 0,
+      description: "",
+      stock: 0,
+      categoryId: 0,
+      brandId: 0,
+      status: "active",
+    })
+  }
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -191,24 +204,16 @@ const Page = () => {
                 </Select>
               </div>
             </div>
+            <CardFooter className="flex justify-between">
+              <Button variant="outline" onClick={handleReset}>
+                Cancel
+              </Button>
+              <Button type="submit">
+                Deploy
+              </Button>
+            </CardFooter>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline" onClick={() => setFormData({
-            name: "",
-            price: 0,
-            description: "",
-            stock: 0,
-            categoryId: 0,
-            brandId: 0,
-            status: "active",
-          })}>
-            Cancel
-          </Button>
-          <Button type="submit" onClick={handleSubmit}>
-            Deploy
-          </Button>
-        </CardFooter>
       </Card>
     </div>
   )

@@ -4,11 +4,16 @@ import { NextResponse } from "next/server";
 const prisma = db
 
 // get product by id
-export const GET = async (req: Request, { params }: { params: { id: string }}): Promise<NextResponse> => {
+export const GET = async (req: Request, props: { params: Promise<{ id: string }>}): Promise<NextResponse> => {
+    const params = await props.params;
     const id = Number(params.id)
     try {
         const response = await prisma.product.findUnique({
-            where: { id: id }
+            where: { id: id },
+            include: {
+                brand: true,
+                category: true
+            }
         })
         return NextResponse.json(response)
     } catch (error) {
@@ -17,11 +22,16 @@ export const GET = async (req: Request, { params }: { params: { id: string }}): 
 }
 
 // delete product(by id)
-export const DELETE = async (req: Request, { params }: { params: {id: string}}): Promise<NextResponse> => {
+export const DELETE = async (req: Request, props: { params: Promise<{id: string}>}): Promise<NextResponse> => {
+    const params = await props.params;
     const id = Number(params.id)
     try {
         const response = await prisma.product.delete({
-            where: { id: id }
+            where: { id: id },
+            include: {
+                brand: true,
+                category: true
+            }
         })
         return NextResponse.json({ msg: "product deleted ", response})
     } catch (error) {
@@ -30,7 +40,8 @@ export const DELETE = async (req: Request, { params }: { params: {id: string}}):
 }
 
 // update product(by id)
-export const PATCH = async (req: Request, { params }: { params: {id: string}}): Promise<NextResponse> => {
+export const PATCH = async (req: Request, props: { params: Promise<{id: string}>}): Promise<NextResponse> => {
+    const params = await props.params;
     const id = Number(params.id)
     const body = await req.json()
     const product = await prisma.product.findUnique({

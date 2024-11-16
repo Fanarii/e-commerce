@@ -1,8 +1,12 @@
+import Navbar from '@/components/Navbar'
+import ProductDisplay from '@/components/ProductDisplay'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+      <div>
+        <ProductDisplay />
+      </div>
   )
 }
 

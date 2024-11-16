@@ -61,8 +61,8 @@ export const POST = async (req: Request): Promise<NextResponse> => {
                 stockQuantity,
                 imageUrl: body.imageUrl || null,
                 status: body.status || 'active',
-                categoryId: body.categoryId,
-                brandId: body.brandId
+                brand: { connect: { id: body.brandId } },
+                category: { connect: { id: body.categoryId } }
             }
         })
 
