@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { FiSearch, FiUser, FiHeart, FiShoppingCart } from "react-icons/fi" // Ikon dari react-icons
 import Cart from "./Cart"
+import Link from "next/link"
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("")
@@ -14,7 +15,7 @@ const Navbar = () => {
   return (
     <nav className="bg-primary text-primary-foreground py-4">
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-        <div className="text-xl font-bold">Logo</div>
+        <div className="text-xl font-bold cursor-pointer"><Link href='/'>Logo</Link></div>
 
         <div className="relative flex items-center">
           <input
